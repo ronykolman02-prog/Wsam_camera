@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسعار الصرف اللحظية - كردستان والعراق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Style */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area h1 i {
+            color: var(--accent-blue);
+        }
+
+        .logo-area p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .notif-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.3s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .notif-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Sections Grid */
+        .section-title {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        .regions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .region-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .region-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .region-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .region-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .rate-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 15px;
+        }
+
+        .rate-value {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            transition: color 0.5s;
+        }
+
+        .rate-value.highlight-up {
+            color: var(--accent-green) !important;
+        }
+
+        .rate-value.highlight-down {
+            color: var(--accent-red) !important;
+        }
+
+        .rate-unit {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-right: 4px;
+        }
+
+        .rate-change {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rate-change.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .rate-change.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+        }
+
+        /* Toast Notifications Container */
+        #toastContainer {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 15px 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideIn 0.4s ease, fadeOut 0.4s ease 4.6s forwards;
+            border-right: 4px solid var(--accent-blue);
+        }
+
+        .toast.up { border-right-color: var(--accent-green); }
+        .toast.down { border-right-color: var(--accent-red); }
+
+        .toast i {
+            font-size: 1.2rem;
+        }
+        .toast.up i { color: var(--accent-green); }
+        .toast.down i { color: var(--accent-red); }
+
+        .toast-content h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .toast-content p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(10px); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <h1><i class="fa-solid fa-chart-line"></i> بورصة كردستان والعراق</h1>
+                <p>تحديث أوتوماتيكي لحظي لأسعار الصرف</p>
+            </div>
+            <div class="header-actions">
+                <button class="notif-btn" onclick="requestNotificationPermission()">
+                    <i class="fa-solid fa-bell"></i> تفعيل إشعارات التغير
+                </button>
+                <div class="live-badge">
+                    <div class="pulse"></div>
+                    <span>النظام متصل مباشر</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Regions Market Rates -->
+        <div class="section-title">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-blue);"></i> أسعار تداول الدولار المباشرة في المدن (لكل 100 دولار)
+        </div>
+        
+        <div class="regions-grid" id="regionsGrid">
+            <!-- Dynamic data -->
+        </div>
+
+        <!-- Toast Notifications Box -->
+        <div id="toastContainer"></div>
+
+        <!-- Footer -->
+        <footer>
+            <p>السكربت مصمم للعمل بشكل تفاعلي ومحدث أوتوماتيكياً مع إرسال إشعارات فورية عند أي تغيير في السوق.</p>
+        </footer>
+    </div>
+
+    <script>
+        // بيانات أسعار المدن في كردستان والعراق
+        let regionsData = [
+            { id: 'erbil', name: "أربيل (Erbil)", rate: "167,750", rawRate: 167750, change: "+0.25%", status: "up" },
+            { id: 'sulaymaniyah', name: "السليمانية (Sulaymaniyah)", rate: "167,600", rawRate: 167600, change: "+0.20%", status: "up" },
+            { id: 'duhok', name: "دهوك (Duhok)", rate: "167,800", rawRate: 167800, change: "+0.30%", status: "up" },
+            { id: 'baghdad', name: "بغداد (Baghdad)", rate: "167,900", rawRate: 167900, change: "-0.05%", status: "down" },
+            { id: 'basra', name: "البصرة (Basra)", rate: "167,650", rawRate: 167650, change: "-0.10%", status: "down" }
+        ];
+
+        // دالة عرض بطاقات المدن
+        function renderRegions() {
+            const grid = document.getElementById('regionsGrid');
+            grid.innerHTML = regionsData.map(region => `
+                <div class="region-card" id="card-${region.id}">
+                    <div class="region-name">${region.name}</div>
+                    <div class="rate-box">
+                        <div>
+                            <span class="rate-value" id="rate-${region.id}">${region.rate}</span>
+                            <span class="rate-unit">دينار</span>
+                        </div>
+                        <div class="rate-change ${region.status}">
+                            <i class="fa-solid fa-arrow-${region.status === 'up' ? 'trend-up' : 'trend-down'}"></i>
+                            ${region.change}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // دالة إظهار إشعار منبثق داخل الموقع (Toast)
+        function showToast(title, message, status) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${status}`;
+            
+            const iconClass = status === 'up' ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
+            
+            toast.innerHTML = `
+                <i class="fa-solid ${iconClass}"></i>
+                <div class="toast-content">
+                    <h4>${title}</h4>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            // إزالة الإشعار بعد 5 ثواني
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        // طلب صلاحية إشعارات المتصفح من المستخدم
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                alert("متصفحك لا يدعم إشعارات سطح المكتب");
+                return;
+            }
+            
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    showToast("تم تفعيل الإشعارات بنجاح!", "ستصلك تنبيهات فورية عند تغير أسعار الصرف.", "up");
+                    new Notification("بورصة كردستان والعراق", {
+                        body: "تم تفعيل التنبيهات بنجاح. ستتابع حركة الصرف لحظياً.",
+                        icon: "https://cdn-icons-png.flaticon.com/512/2910/2910791.png"
+                    });
+                } else {
+                    alert("تم رفض إذن الإشعارات. يفعيلها من إعدادات المتصفح لتلقي التنبيهات.");
+                }
+            });
+        }
+
+        // محاكاة التحديث اللحظي (تحديث عشوائي مدروس للتجربة كل 12 ثانية)
+        function simulateMarketChanges() {
+            setInterval(() => {
+                // اختيار مدينة عشوائية لتحديث سعرها
+                const randomIndex = Math.floor(Math.random() * regionsData.length);
+                const region = regionsData[randomIndex];
+                
+                const oldRaw = region.rawRate;
+                // توليد تغير بسيط صعوداً أو هبوطاً (بين -150 إلى +150 دينار)
+                const fluctuation = (Math.random() > 0.4 ? 1 : -1) * (Math.floor(Math.random() * 100) + 50);
+                const newRaw = oldRaw + fluctuation;
+                
+                region.rawRate = newRaw;
+                region.rate = newRaw.toLocaleString('en-US');
+                region.status = fluctuation >= 0 ? "up" : "down";
+                const percentage = ((fluctuation / oldRaw) * 100).toFixed(2);
+                region.change = (fluctuation >= 0 ? "+" : "") + percentage + "%";
+
+                // تحديث الواجهة وتلوين العنصر المتغير مؤقتاً
+                renderRegions();
+                
+                const rateElem = document.getElementById(`rate-${region.id}`);
+                if (rateElem) {
+                    rateElem.classList.add(fluctuation >= 0 ? 'highlight-up' : 'highlight-down');
+                    setTimeout(() => {
+                        rateElem.classList.remove('highlight-up', 'highlight-down');
+                    }, 2000);
+                }
+
+                // رسالة التنبيه
+                const alertTitle = `تغير سعر الدولار في ${region.name}`;
+                const alertMsg = `السعر الجديد: ${region.rate} دينار (${region.change})`;
+
+                // 1. إظهار إشعار داخلي في الموقع (Toast)
+                showToast(alertTitle, alertMsg, region.status);
+
+                // 2. إرسال إشعار متصفح (Desktop Notification) إذا كان مسموحاً
+                if (window.Notification && Notification.permission === "granted") {
+                    new Notification(alertTitle, {
+                        body: alertMsg,
+                        icon: "https://cdn-icons-png.flaticon.com/512/2910/2910791.png"
+                    });
+                }
+
+            }, 12000); // يتم الفحص والتحديث كل 12 ثانية (يمكنك تعديل المدة بالميللي ثانية)
+        }
+
+        // تشغيل النظام عند تحميل الصفحة
+        window.onload = function() {
+            renderRegions();
+            simulateMarketChanges(); // بدء المحاكاة التلقائية للتحديثات
+        };
+    </script>
+</body>
+</html>
